@@ -3,14 +3,14 @@ let xBolinha = 300;
 let yBolinha = 200;
 let diametro = 15;
 let raio = diametro / 2;
-
-//VEL BOLINHA
 let velocidadexBolinha = 6;
 let velocidadeyBolinha = 6;
+
+//RAQUETE**
 let comprimentoRaquete = 10;
 let alturaRaquete = 90;
 
-//RAQUETE
+//RAQUETE1
 let xRaquete1 = 5;
 let yRaquete1 = 150;
 
@@ -18,12 +18,11 @@ let yRaquete1 = 150;
 let xRaquete2 = 585;
 let yRaquete2 = 150;
 
-//RAQUETE Bot
-let xRaqueteBot = 585;
-let yRaqueteBot = 150;
-let velocidadeyBot; 
-let velocidadexBot;
+//PLACAR DO JOGO
+let meusPontos = 0;
+let pontosOp = 0;
 
+//UTILIZA BIBLIOTECA P5 COLLIDE
 let colisao = false;
 
 function setup() {
@@ -33,17 +32,23 @@ function setup() {
 function draw() {
   background(50);
   movimentarBolinha();
-  criarLinhaCentral();
   criarBolinha();   
   criarRaquete(xRaquete1, yRaquete1);
-  //criarRaquete(xRaquete2, yRaquete2);
-  criarRaquete(xRaqueteBot, yRaqueteBot);  
+  criarRaquete(xRaquete2, yRaquete2);  
   movimentarRaquete1();
-  //movimentarRaquete2();
-  movimentarRaqueteBot();  
+  movimentarRaquete2();
   verificarBorda();
-  colisaoRaquete(xRaquete1, yRaquete2);
-  colisaoRaquete(xRaqueteBot, yRaqueteBot);
+  colisaoRaquete(xRaquete1, yRaquete1);
+  colisaoRaquete(xRaquete2, yRaquete2);
+  incluirPlacar();
+  marcarPonto();
+  bolinhaNaoFicaPresa();
+}
+
+function bolinhaNaoFicaPresa(){
+    if (xBolinha - raio < 0){
+    xBolinha = 23
+    }
 }
 
 function criarRaquete(x, y){
@@ -68,20 +73,9 @@ function movimentarRaquete2(){
   }
 }
 
-function movimentarRaqueteBot(){
-  velocidadeyBot = yBolinha - yRaqueteBot - (comprimentoRaquete/2) -30;
-  yRaqueteBot += velocidadeyBot;
-}
-
 function criarBolinha(){
   //Criar Bolinha
   circle(xBolinha, yBolinha, diametro);  
-}
-
-function criarLinhaCentral(){
-  line(width/2, 0, width/2, height);
-  stroke('white');
-  strokeWeight(5); 
 }
 
 function movimentarBolinha(){
@@ -106,9 +100,25 @@ function colisaoRaquete(x, y){
   }
 }
 
-function colisaoRaqueteBot(){
-  colisao = collideRectCircle(xRaqueteBot, yRaqueteBot, comprimentoRaquete, alturaRaquete, xBolinha, yBolinha, raio); 
-  if(colisao){
-    velocidadexBolinha *= -1;
+function incluirPlacar(){
+    stroke(255);
+    textAlign(CENTER);
+    textSize(16);
+    fill(color(0, 255, 255));
+    rect(150, 10, 40, 20);
+    fill(255);
+    text(meusPontos, 170, 26);
+    fill(color(255, 0, 0));
+    rect(450, 10, 40, 20);
+    fill(255);
+    text(pontosOp, 470, 26);
+}
+
+function marcarPonto(){
+  if(xBolinha > 590){
+    meusPontos += 1;
+  }
+  if(xBolinha <10){
+    pontosOp += 1;
   }
 }

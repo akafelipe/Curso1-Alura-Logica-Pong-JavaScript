@@ -7,12 +7,24 @@ let raio = diametro / 2;
 //VEL BOLINHA
 let velocidadexBolinha = 6;
 let velocidadeyBolinha = 6;
-
-//RAQUETE
-let xRaquete = 5;
-let yRaquete = 150;
 let comprimentoRaquete = 10;
 let alturaRaquete = 90;
+
+//RAQUETE
+let xRaquete1 = 5;
+let yRaquete1 = 150;
+
+//RAQUETE2
+let xRaquete2 = 585;
+let yRaquete2 = 150;
+
+//RAQUETE Bot
+let xRaqueteBot = 585;
+let yRaqueteBot = 150;
+let velocidadeyBot; 
+let velocidadexBot;
+
+let colisao = false;
 
 function setup() {
   createCanvas(600, 400);
@@ -20,30 +32,45 @@ function setup() {
 
 function draw() {
   background(50);
-  verificarColisao();
-  movimentarRaquete1();
-  criarLinhaCentral();
-  criarBolinha();
-  criarRaquete1();
   movimentarBolinha();
+  criarLinhaCentral();
+  criarBolinha();   
+  criarRaquete(xRaquete1, yRaquete1);
+  //criarRaquete(xRaquete2, yRaquete2);
+  criarRaquete(xRaqueteBot, yRaqueteBot);  
+  movimentarRaquete1();
+  //movimentarRaquete2();
+  movimentarRaqueteBot();  
   verificarBorda();
+  colisaoRaquete(xRaquete1, yRaquete2);
+  colisaoRaquete(xRaqueteBot, yRaqueteBot);
 }
 
-function criarRaquete1(){
-  rect(xRaquete, yRaquete, comprimentoRaquete, alturaRaquete);
+function criarRaquete(x, y){
+  rect(x, y, comprimentoRaquete, alturaRaquete);
 }
 
 function movimentarRaquete1(){
   if (keyIsDown(UP_ARROW)){
-    yRaquete -= 10;
+    yRaquete1 -= 10;
   }
   if (keyIsDown(DOWN_ARROW)){
-    yRaquete += 10;
+    yRaquete1 += 10;
   }
 }
 
-function criarRaquete2(){
-  rect(xRaquete, yRaquete, comprimentoRaquete, alturaRaquete);
+function movimentarRaquete2(){
+  if (keyIsDown(87)){
+    yRaquete2 -= 10;
+  }
+  if (keyIsDown(83)){
+    yRaquete2 += 10;
+  }
+}
+
+function movimentarRaqueteBot(){
+  velocidadeyBot = yBolinha - yRaqueteBot - (comprimentoRaquete/2) -30;
+  yRaqueteBot += velocidadeyBot;
 }
 
 function criarBolinha(){
@@ -72,8 +99,16 @@ function verificarBorda(){
   }  
 }
 
-function verificarColisao(){
-  if(xBolinha - raio < xRaquete + comprimentoRaquete && yBolinha - raio < yRaquete + alturaRaquete && yBolinha + raio > yRaquete){
+function colisaoRaquete(x, y){
+  colisao = collideRectCircle(x, y, comprimentoRaquete, alturaRaquete, xBolinha, yBolinha, raio); 
+  if(colisao){
+    velocidadexBolinha *= -1;
+  }
+}
+
+function colisaoRaqueteBot(){
+  colisao = collideRectCircle(xRaqueteBot, yRaqueteBot, comprimentoRaquete, alturaRaquete, xBolinha, yBolinha, raio); 
+  if(colisao){
     velocidadexBolinha *= -1;
   }
 }

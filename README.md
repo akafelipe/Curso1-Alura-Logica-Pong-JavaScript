@@ -4,4 +4,4 @@ Curso 1 - Lógica de programação: comece em lógica com o jogo Pong e JavaScri
 
 Criar o jogo pong no Scratch: https://scratch.mit.edu/projects/886492583/editor/
 
-Criar o jogo pong no JavaScript: https://editor.p5js.org/sqr.felipe/sketches/x5NryiwrT
+Criar o jogo pong no JavaScript: https://editor.p5js.org/sqr.felipe/sketches/bSeRJ3qVy
